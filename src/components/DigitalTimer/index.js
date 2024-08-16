@@ -12,13 +12,13 @@ const initialState = {
 class DigitalTimer extends Component {
   state = initialState
 
-  ComponentWillUnmount() {
+  componentWillUnmount() {
     this.clearTimerInterval()
   }
 
   clearTimerInterval = () => clearInterval(this.intervalId)
 
-  onDecrementTimerLimitInMinutes = () => {
+  onDecreaseTimerLimitInMinutes = () => {
     const {timerLimitInMinutes} = this.state
 
     if (timerLimitInMinutes > 1) {
@@ -35,7 +35,7 @@ class DigitalTimer extends Component {
 
   renderTimerLimitController = () => {
     const {timerLimitInMinutes, timeElapsedInSeconds} = this.state
-    const isButtonDisabled = timeElapsedInSeconds > 0
+    const isButtonsDisabled = timeElapsedInSeconds > 0
 
     return (
       <div className="timer-limit-controller-container">
@@ -43,8 +43,8 @@ class DigitalTimer extends Component {
         <div className="timer-limit-controller">
           <button
             className="limit-controller-button"
-            disabled={isButtonDisabled}
-            onClick={this.onDecrementTimerLimitInMinutes}
+            disabled={isButtonsDisabled}
+            onClick={this.onDecreaseTimerLimitInMinutes}
             type="button"
           >
             -
@@ -54,7 +54,7 @@ class DigitalTimer extends Component {
           </div>
           <button
             className="limit-controller-button"
-            disabled={isButtonDisabled}
+            disabled={isButtonsDisabled}
             onClick={this.onIncreaseTimerLimitInMinutes}
             type="button"
           >
@@ -84,7 +84,7 @@ class DigitalTimer extends Component {
     }
   }
 
-  onStarOrPauseTimer = () => {
+  onStartOrPauseTimer = () => {
     const {isTimerRunning, timeElapsedInSeconds, timerLimitInMinutes} =
       this.state
     const isTimerCompleted = timeElapsedInSeconds === timerLimitInMinutes * 60
@@ -102,7 +102,7 @@ class DigitalTimer extends Component {
 
   renderTimerController = () => {
     const {isTimerRunning} = this.state
-    const starOrPauseImageUrl = isTimerRunning
+    const startOrPauseImageUrl = isTimerRunning
       ? 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
       : 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
     const startOrPauseAltText = isTimerRunning ? 'pause icon' : 'play icon'
@@ -111,20 +111,20 @@ class DigitalTimer extends Component {
       <div className="timer-controller-container">
         <button
           className="timer-controller-btn"
-          onClick={this.onStarOrPauseTimer}
+          onClick={this.onStartOrPauseTimer}
           type="button"
         >
           <img
             alt={startOrPauseAltText}
-            className="timer-control-icon"
-            src={starOrPauseImageUrl}
+            className="timer-controller-icon"
+            src={startOrPauseImageUrl}
           />
           <p className="timer-controller-label">
-            {isTimerRunning ? 'pause' : 'start'}
+            {isTimerRunning ? 'Pause' : 'Start'}
           </p>
         </button>
         <button
-          className="timer-control-btn"
+          className="timer-controller-btn"
           onClick={this.onResetTimer}
           type="button"
         >
@@ -160,7 +160,7 @@ class DigitalTimer extends Component {
         <h1 className="heading">Digital Timer</h1>
         <div className="digital-timer-container">
           <div className="timer-display-container">
-            <div className="elapsed-timer-container">
+            <div className="elapsed-time-container">
               <h1 className="elapsed-time">
                 {this.getElapsedSecondsInTimeFormat()}
               </h1>
